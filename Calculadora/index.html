@@ -1,60 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Neumorphism Calculator</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" type="text/css" href="css/styles2.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <link rel="stylesheet" href="css/style2.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="container">
-    <header>
-        <div class="interior">
-          <a href="#" class="logo" target="blank"><img src="https://cdn-icons-png.flaticon.com/512/6214/6214064.png" alt="Logo"></a>
-          <nav class="navegacion">
-            <ul>
-              <li><a href="#" target="blank">Inicio</a></li>
-              <li><a href="#" target="blank">Acerca de</a></li>
-              <li class="submenu">
-                <a href="#" target="blank">Productos</a>
-                <ul class="hijos">
-                  <li><a href="">Item1</a></li>
-                  <li><a href="">Item2</a></li>
-                  <li><a href="">Item3</a></li>
-                  <li><a href="">Item4</a></li>
-                  <li><a href="">Item5</a></li>
-                </ul>
-              </li>
-              <li><a href="#" target="blank">Contacto</a></li>
+  <header>
+    <div class="interior">
+      <a href="../menu.html" class="logo"><img src="https://cdn-icons-png.freepik.com/256/2519/2519635.png" alt=""></a>
+      <nav class="navegacion">
+        <ul>
+          <li><a href="../menu.html">Inicio</a></li>
+          <li class="submenu">
+            <a href="">Juegos Taller</a>
+            <ul class="hijos">
+              <li><a href="">Citas médicas</a></li>
+              <li><a href="">Juego de memoria</a></li>
+              <li><a href="../Triqui/index.html">Triqui</a></li>
+              <li><a href="index.html">Calculadora</a></li>
             </ul>
-          </nav>
-        </div>
-    </header><br><br>
-   <div class="calculator">
-        <div class="buttons">
-            <h2 id="value"></h2>
-            <span id="clear">Clear</span>
-            <span>/</span>
-            <span>*</span>
-            <span>7</span>
-            <span>8</span>
-            <span>9</span>
-            <span>-</span>
-            <span>4</span>
-            <span>5</span>
-            <span>6</span>
-            <span id="plus">+</span>
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>0</span>
-            <span>00</span>
-            <span>.</span>
-            <span id="equal">=</span>
-        </div>
+          </li>
+          <li><a href="">Contacto</a></li>
+        </ul>
+      </nav>
     </div>
+  </header>
+  <div  class="calculadora">
+    <div class="pantalla">0</div>
+      <button id="c" class="btn">C</button>
+      <button id="borrar" class="btn">←</button>
+      <button class="btn">/</button>
+      <button class="btn">*</button>
+      <button class="btn">7</button>
+      <button class="btn">8</button>
+      <button class="btn">9</button>
+      <button class="btn">-</button>
+      <button class="btn">4</button>
+      <button class="btn">5</button>
+      <button class="btn">6</button>
+      <button class="btn">+</button>
+      <button class="btn">1</button>
+      <button class="btn">2</button>
+      <button class="btn">3</button>
+      <button id="igual" class="btn">=</button>
+      <button id="cero" class="btn">0</button>
+      <button class="btn">.</button>
     </div>
-    <button class="toggleBtn"></button>
-    <script src="js/script.js"></script>
+  </div>
+    <script src="js/style.js"></script>
 </body>
 </html>
