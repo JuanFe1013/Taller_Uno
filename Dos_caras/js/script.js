@@ -1,58 +1,162 @@
-const totalCards = 12;
-const images = ['img1.png', 'img2.png', 'img3.png', 'img4.png', 'img5.png', 'img6.png'];
-let cards = [];
-let selectedCards = [];
-let matchesFound = 0;
-let currentAttempts = 0;
+class Memorama {
 
-function initializeGame() {
-   let gameArea = document.querySelector('#game');
-   gameArea.innerHTML = ''; // Limpiar el área de juego previa
-   let deck = [];
+    constructor() {
 
-   // Duplicar cada imagen para crear pares
-   images.forEach(img => {
-       deck.push(img, img);
-   });
+        this.canPlay = false;
 
-   // Barajar el mazo
-   deck.sort(() => Math.random() - 0.5);
+        this.card1 = null;
+        this.card2 = null;
 
-   deck.forEach((imgSrc, index) => {
-       let card = document.createElement('div');
-       card.classList.add('card');
-       card.innerHTML = `
-           <div class="back"></div>
-           <div class="face" style="background-image: url('../assets/${imgSrc}');"></div>
-       `;
-       card.addEventListener('click', () => activate(card));
-       cards.push(card);
-       gameArea.appendChild(card);
-   });
-}
+        this.availableImages = ["https://i.pinimg.com/236x/7a/67/99/7a6799536a92d83b2d68ddd26b16d1a9.jpg", 
+        "https://i.pinimg.com/236x/e3/26/3c/e3263c6336ebadbe7a8f6ef099c7a2bd.jpg", 
+        "https://i.pinimg.com/236x/8d/75/b4/8d75b48d9bdceb2729bcb7fff437a137.jpg",
+        "https://i.pinimg.com/236x/ea/45/16/ea45168b53059d8059fb93c33caae5b4.jpg"];
+        this.orderForThisRound = [];
+        this.cards = Array.from( document.querySelectorAll(".board-game figure") );
 
-function activate(card) {
-    if (!card.classList.contains('active') && selectedCards.length < 2) {
-        card.classList.add('active');
-        selectedCards.push(card);
+        this.maxPairNumber = this.availableImages.length;
 
-        if (selectedCards.length === 2) {
-            currentAttempts++;
-            document.getElementById('stats').textContent = `${currentAttempts} intentos`;
-            if (selectedCards[0].querySelector('.face').style.backgroundImage === selectedCards[1].querySelector('.face').style.backgroundImage) {
-                matchesFound++;
-                selectedCards = [];
-                if (matchesFound === images.length) {
-                    alert('Juego completado!');
-                }
-            } else {
-                setTimeout(() => {
-                    selectedCards.forEach(card => card.classList.remove('active'));
-                    selectedCards = [];
-                }, 1000);
-            }
-        }
+        this.startGame();
+
     }
+
+    startGame() {
+
+        this.foundPairs = 0;
+        this.setNewOrder();
+        this.setImagesInCards();
+        this.openCards();
+
+    }
+
+    setNewOrder() {
+
+        this.orderForThisRound = this.availableImages.concat(this.availableImages);
+        this.orderForThisRound.sort( () => Math.random() - 0.5 );
+
+    }
+
+    setImagesInCards() {
+        this.cards.forEach((card, index) => {
+            const imgLabel = card.querySelector('.searched-image img');
+            imgLabel.src = this.orderForThisRound[index];
+            card.dataset.image = this.orderForThisRound[index];
+        });
+    }
+    
+
+    openCards() {
+
+        this.cards.forEach(card => card.classList.add("opened"));
+
+        setTimeout(() => {
+            this.closeCards();
+        }, 10000);
+
+    }
+
+    closeCards() {
+
+        this.cards.forEach(card => card.classList.remove("opened"));
+        this.addClickEvents();
+        this.canPlay = true;
+
+    }
+
+    addClickEvents() {
+
+        this.cards.forEach(_this => _this.addEventListener("click", this.flipCard.bind(this)));
+
+    }
+
+    removeClickEvents() {
+
+        this.cards.forEach(_this => _this.removeEventListener("click", this.flipCard));
+
+    }
+
+    flipCard(e) {
+
+        const clickedCard = e.target;
+
+        if (this.canPlay && !clickedCard.classList.contains("opened")) {
+            
+            clickedCard.classList.add("opened");
+            this.checkPair( clickedCard.dataset.image );
+
+        }
+
+    }
+
+    checkPair(image) {
+
+        if (!this.card1) this.card1 = image;
+        else this.card2 = image;
+
+        if (this.card1 && this.card2) {
+            
+            if (this.card1 == this.card2) {
+
+                this.canPlay = false;
+                setTimeout(this.checkIfWon.bind(this), 300)
+                
+            }
+            else {
+
+                this.canPlay = false;
+                setTimeout(this.resetOpenedCards.bind(this), 800)
+
+            }
+
+        }
+
+    }
+
+    resetOpenedCards() {
+        
+        const firstOpened = document.querySelector(`.board-game figure.opened[data-image='${this.card1}']`);
+        const secondOpened = document.querySelector(`.board-game figure.opened[data-image='${this.card2}']`);
+
+        firstOpened.classList.remove("opened");
+        secondOpened.classList.remove("opened");
+
+        this.card1 = null;
+        this.card2 = null;
+
+        this.canPlay = true;
+
+    }
+
+    checkIfWon() {
+
+        this.foundPairs++;
+
+        this.card1 = null;
+        this.card2 = null;
+        this.canPlay = true;
+
+        if (this.maxPairNumber == this.foundPairs) {
+
+            alert("¡Ganaste!");
+            this.setNewGame();
+            
+        }
+
+    }
+
+    setNewGame() {
+
+        this.removeClickEvents();
+        this.cards.forEach(card => card.classList.remove("opened"));
+
+        setTimeout(this.startGame.bind(this), 1000);
+
+    }
+
 }
 
-initializeGame();
+document.addEventListener("DOMContentLoaded", () => {
+
+    new Memorama();
+
+});
