@@ -14,9 +14,10 @@ body{
 .header {
     width: 100%;
     height: 90px;
-    background-color: #b2bddd;
+    background-color: #14161d;
     position: fixed; 
     top: 0; 
+    z-index: 1000; 
 }
 
 .interior{
