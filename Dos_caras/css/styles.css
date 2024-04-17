@@ -20,7 +20,7 @@ figure img {
 
 figure {
    position: relative;
-   transition: all ease .5s;
+   transition: all ease .3s;
    transform-style: preserve-3d;
    transform: perspective(600px) rotateY(0deg);
    cursor: pointer;
@@ -45,6 +45,7 @@ figure:hover:after {
 
 figure.opened {
    transform: perspective(600px) rotateY(180deg);
+   transition: all ease .3s;
 }
 
 figure .back {

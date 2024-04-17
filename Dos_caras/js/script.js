@@ -9,7 +9,7 @@ class Memorama {
 
         this.availableImages = ["https://i.pinimg.com/236x/7a/67/99/7a6799536a92d83b2d68ddd26b16d1a9.jpg", 
         "https://i.pinimg.com/236x/e3/26/3c/e3263c6336ebadbe7a8f6ef099c7a2bd.jpg", 
-        "https://i.pinimg.com/236x/8d/75/b4/8d75b48d9bdceb2729bcb7fff437a137.jpg",
+        "https://i.pinimg.com/236x/bf/1e/e3/bf1ee3c4723f2fd6a30e09735f158b89.jpg",
         "https://i.pinimg.com/236x/ea/45/16/ea45168b53059d8059fb93c33caae5b4.jpg"];
         this.orderForThisRound = [];
         this.cards = Array.from( document.querySelectorAll(".board-game figure") );
@@ -51,7 +51,7 @@ class Memorama {
 
         setTimeout(() => {
             this.closeCards();
-        }, 10000);
+        }, 1500); 
 
     }
 
@@ -137,7 +137,7 @@ class Memorama {
 
         if (this.maxPairNumber == this.foundPairs) {
 
-            alert("¡Ganaste!");
+            alert("Has Ganado 😎👾😎");
             this.setNewGame();
             
         }
