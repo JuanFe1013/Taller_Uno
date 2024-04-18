@@ -12,7 +12,7 @@ form.addEventListener('submit', e => {
 
     console.log(`Programar cita con ${specialist} en ${date} a ${time} para ${name} (${email} - ${phone})`);
 
-    alert(`Cita programada! Recibirá un correo electrónico de confirmación en ${email}`);
+    alert(`Cita programada! Recibirá un correo electrónico de confirmación en email`);
 
     form.reset();
 });
