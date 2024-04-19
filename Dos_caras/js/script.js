@@ -40,14 +40,15 @@ class Memorama {
 
     startGame() {
         this.cardsContainer.addEventListener('click', event => {
-            this.flipCard(event.target.closest('figure'));
+            // this.flipCard(event.target.closest('figure'));
+            this.flipCard(event);
         });
     }
 
     setNewOrder() {
 
         this.orderForThisRound = this.availableImages.concat(this.availableImages);
-        this.orderForThisRound.sort( () => Math.random() - 0.5 );
+        this.orderForThisRound.sort(() => Math.random() - 0.5);
 
     }
 
@@ -58,7 +59,7 @@ class Memorama {
             card.dataset.image = this.orderForThisRound[index];
         });
     }
-    
+
 
     openCards() {
 
@@ -66,7 +67,7 @@ class Memorama {
 
         setTimeout(() => {
             this.closeCards();
-        }, 1500); 
+        }, 1500);
 
     }
 
@@ -92,8 +93,8 @@ class Memorama {
 
     flipCard(e) {
         const clickedCard = e.target.closest("figure");
-        if (!clickedCard || clickedCard.classList.contains("opened")) return;
-    
+        if (!clickedCard) return;
+
         clickedCard.classList.add("opened");
         this.checkPair(clickedCard.dataset.image);
     }
@@ -104,25 +105,25 @@ class Memorama {
         else this.card2 = image;
 
         if (this.card1 && this.card2) {
-            
+
             if (this.card1 == this.card2) {
 
                 this.canPlay = false;
                 setTimeout(this.checkIfWon.bind(this), 300)
-                
+
             }
             else {
 
                 this.canPlay = false;
                 setTimeout(this.resetOpenedCards.bind(this), 800)
-}
+            }
 
         }
 
     }
 
     resetOpenedCards() {
-        
+
         const firstOpened = document.querySelector(`.board-game figure.opened[data-image='${this.card1}']`);
         const secondOpened = document.querySelector(`.board-game figure.opened[data-image='${this.card2}']`);
 
@@ -148,7 +149,7 @@ class Memorama {
 
             alert("Has Ganado 😎👾😎");
             this.setNewGame();
-            
+
         }
 
     }
