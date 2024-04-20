@@ -19,7 +19,7 @@ class Memorama {
     }
 
     setupGame(pairCount) {
-        this.cardsContainer.innerHTML = ''; // Clear the board
+        this.cardsContainer.innerHTML = ''; 
         const pairs = this.availableImages.slice(0, pairCount);
         this.orderForThisRound = pairs.concat(pairs).sort(() => Math.random() - 0.5);
 
@@ -31,13 +31,13 @@ class Memorama {
                     <img src="${imageSrc}" alt="Image">
                 </div>
             `;
+            card.addEventListener('click', () => this.flipCard(card)); 
             this.cardsContainer.appendChild(card);
         });
 
         this.cards = Array.from(document.querySelectorAll(".board-game figure"));
         this.closeCards();
     }
-
     startGame() {
         this.cardsContainer.addEventListener('click', event => {
             // this.flipCard(event.target.closest('figure'));
@@ -91,48 +91,36 @@ class Memorama {
 
     }
 
-    flipCard(e) {
-        const clickedCard = e.target.closest("figure");
-        if (!clickedCard) return;
-
+    flipCard(clickedCard) {
+        if (!this.canPlay || clickedCard.classList.contains('figure')) return; 
         clickedCard.classList.add("opened");
-        this.checkPair(clickedCard.dataset.image);
+        this.checkPair(clickedCard.querySelector('.searched-image img').src); 
     }
 
     checkPair(image) {
-
         if (!this.card1) this.card1 = image;
         else this.card2 = image;
 
         if (this.card1 && this.card2) {
-
-            if (this.card1 == this.card2) {
-
+            if (this.card1 === this.card2) {
                 this.canPlay = false;
                 setTimeout(this.checkIfWon.bind(this), 300)
-
-            }
-            else {
-
+            } else {
                 this.canPlay = false;
                 setTimeout(this.resetOpenedCards.bind(this), 800)
             }
-
         }
-
     }
 
     resetOpenedCards() {
 
-        const firstOpened = document.querySelector(`.board-game figure.opened[data-image='${this.card1}']`);
-        const secondOpened = document.querySelector(`.board-game figure.opened[data-image='${this.card2}']`);
-
-        firstOpened.classList.remove("opened");
-        secondOpened.classList.remove("opened");
-
+        this.cards.forEach(card => {
+            if (card.classList.contains("opened")) {
+                card.classList.remove("opened");
+            }
+        });
         this.card1 = null;
         this.card2 = null;
-
         this.canPlay = true;
 
     }
